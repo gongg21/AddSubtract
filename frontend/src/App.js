@@ -6,6 +6,7 @@ function App() {
   const [second, setSecond] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState();
+  const [op, setOp] = useState();
   
   async function handleAddNumbers() {
     try {
@@ -38,8 +39,8 @@ function App() {
         <input type='text' style={{width:'100px', height:'100px', margin:'3px', fontSize:'20px', textAlign:'center',}} placeholder='First' onInput={(first)=>{setFirst(first.target.value); setResult(null)}}/>
         <input type='text' style={{width:'100px', height:'100px', margin:'3px', fontSize:'20px', textAlign:'center',}} placeholder='Second' onChange={(second)=>{setSecond(second.target.value); setResult(null)}}/>
         <div style={{display:'flex', flexDirection:'column',}}>
-          <button style={{margin:'3px', fontSize:'16px',}} onClick={handleAddNumbers}>+</button>
-          <button style={{margin:'3px', fontSize:'16px',}} onClick={handleSubtractNumbers}>-</button>
+          <button style={{margin:'3px', fontSize:'16px',}} onClick={() => {handleAddNumbers(); setOp('+')}}>+</button>
+          <button style={{margin:'3px', fontSize:'16px',}} onClick={() => {handleSubtractNumbers(); setOp('-')}}>-</button>
         </div>
       </div>
       {error && (
@@ -47,8 +48,11 @@ function App() {
           <strong>Error:</strong> {error}
         </div>
       )}
-      {result !== null && (
+      {result !== null && op === '+' && (
         <h2 style={{borderWidth:'2px'}}>{first ? first : 0} + {second ? second : 0} = {result}</h2>
+      )}
+      {result !== null && op === '-' && (
+        <h2 style={{borderWidth:'2px'}}>{first ? first : 0} - {second ? second : 0} = {result}</h2>
       )}
     </div>
   );
